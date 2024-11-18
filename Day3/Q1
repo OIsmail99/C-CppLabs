@@ -1,20 +1,14 @@
 #include <stdio.h>
 
-int main(){
-    int size;
-    printf("Enter the size of the array: "); 
-    scanf("%d", &size);
-    
-    int arr[size];
-    for(int i = 0; i < size; i++){ //first loop for reading the array from the user
-        printf("enter element at index %d:  ", i); 
-        scanf("%d", &arr[i]);
+int main() {
+    int arr[] = {10, 20, 30, 40, 50}; // array
+    int size = sizeof(arr) / sizeof(arr[0]);
+
+    for (int i = 0; i < size; i++) {
+        for (int o = i; o == i; o++) {
+            printf("Element at index %d is: %d\n", i, arr[o]);
+        }
     }
-    printf("the array is: \n");
-    
-    for(int i =0; i < size; i++){ //second loop for printing the array
-        printf("%d\n", arr[i]);
-    }
-    
+
     return 0;
 }
