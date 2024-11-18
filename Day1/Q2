@@ -1,0 +1,7 @@
+int main() {
+    printf("Enter a character\n");
+    char c;
+    scanf("%c", &c); // getting input from keyboard and saving it into var c
+    printf("%d", c); // %d format specifier will print the ASCII code
+    return 0;
+}
