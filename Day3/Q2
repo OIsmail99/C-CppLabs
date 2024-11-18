@@ -1,0 +1,31 @@
+#include <stdio.h>
+
+int maxVal(int size,int arr[]){
+    int max = arr[0];
+    for(int i =0; i < size; i++){
+        if(arr[i] > max){
+            max = arr[i];
+        }
+    }
+    return max;
+}
+
+int minVal(int size, int arr[]){
+    int min = arr[0];
+    for(int i =0; i < size; i++){
+        if(arr[i] < min){
+            min = arr[i];
+        }
+    }
+    return min;
+    
+}
+
+int main(){
+    int myArray[] = {3,1,6};
+    int size = sizeof(myArray) / sizeof(myArray[0]); //size of entire array / size of each element
+    int max = maxVal(size, myArray);
+    int min = minVal(size, myArray);
+    printf("max value is: %d, and min value is: %d", max, min);
+    return 0;
+}
