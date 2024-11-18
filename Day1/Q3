@@ -1,0 +1,10 @@
+#include <stdlib.h>
+
+int main() {
+    int x = 15;
+
+    printf("Hexadecimal representation of %d is: %x \n", x, x);
+    printf("Octal representation of %d is: %o \n", x, x);
+
+    return 0;
+}
