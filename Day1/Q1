@@ -1,0 +1,12 @@
+#include <stdlib.h>
+
+int main() {
+    int x = 10;
+    int c = 'a';
+
+    printf("%d\n", x); // integer format specifier
+    printf("%f\n", x); // float specifier
+    printf("%c", c);  // character specifier
+
+    return 0;
+}
