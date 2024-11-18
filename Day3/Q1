@@ -1,14 +1,33 @@
 #include <stdio.h>
+#include <stdlib.h>
 
-int main() {
-    int arr[] = {10, 20, 30, 40, 50}; // array
-    int size = sizeof(arr) / sizeof(arr[0]);
 
-    for (int i = 0; i < size; i++) {
-        for (int o = i; o == i; o++) {
-            printf("Element at index %d is: %d\n", i, arr[o]);
+int main()
+{
+    //inputs
+    int arr[] = {2,3,10,9,7,15,4,9,19,86,11,3};
+    int size = 12;
+
+    //calculating number of rows and columns
+    int row_size = 0;
+    int col_size = 0;
+
+    for(int i = 2; i <= size; i++){
+
+        if(12 % i == 0){
+             row_size = i;
+             col_size = size/i;
+            break;
         }
     }
 
-    return 0;
+    //printing as if it's 2D
+    for(int row=0; row < row_size; row++){
+        for(int col=0; col < col_size; col++){
+         printf("%d\n",arr[row*col_size + col]);
+        }
+    }
+
+
+return 0;
 }
