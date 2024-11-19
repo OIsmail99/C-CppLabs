@@ -1,33 +1,33 @@
 #include <stdio.h>
-#include <stdlib.h>
 
-
-int main()
-{
-    //inputs
-    int arr[] = {2,3,10,9,7,15,4,9,19,86,11,3};
-    int size = 12;
-
-    //calculating number of rows and columns
-    int row_size = 0;
-    int col_size = 0;
-
-    for(int i = 2; i <= size; i++){
-
-        if(12 % i == 0){
-             row_size = i;
-             col_size = size/i;
-            break;
-        }
+int main() {
+    
+    int row;
+    int col; //number of elements
+    int size;
+    int row_index=0;
+    int col_index=0;
+    
+    printf("enter the size of array: ");
+    scanf("%d", &size);
+    
+    printf("enter number of rows: ");
+    scanf("%d", &row);
+    col = size / row;
+    
+    int arr[size];
+    for(int i = 0; i < row; i++){
+         for(int j =0; j < col; j++){
+            printf("Enter element at index [%d][%d]\n",i,j); //(0,0) (0,1)
+            scanf("%d", &arr[(i*col)+j]);
+            }
     }
-
-    //printing as if it's 2D
-    for(int row=0; row < row_size; row++){
-        for(int col=0; col < col_size; col++){
-         printf("%d\n",arr[row*col_size + col]);
-        }
-    }
-
-
-return 0;
+    
+     for(row_index=0; row_index < row ;row_index++){
+         for(col_index=0; col_index < col ;col_index++){
+             printf("%d\n", arr[(row_index*col)+col_index]);
+         }
+     }
+    
+    return 0;
 }
