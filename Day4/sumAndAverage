@@ -1,0 +1,32 @@
+#include <stdio.h>
+
+int main() {
+    
+    int arr[3][4] = 
+    {
+        {2,4,6,8},
+        {3,5,7,9},
+        {1,24,10,3},
+    };
+    int sum = 0; 
+    int average = 0;
+    
+    for(int i=0; i < 3; i++){
+        for(int j = 0; j < 4; j++){
+            sum+=arr[i][j];
+        }
+        printf("sum of row %d : %d\n", i+1, sum);
+    }
+    
+    sum = 0;
+    for(int i = 0; i < 4; i++){
+        
+        for(int j=0; j < 3; j++){
+            sum+= arr[j][i];
+        }
+        average = sum / 3;
+        printf("average of column %d is %d\n",i+1, average);
+    }
+    
+    
+    return 0;
