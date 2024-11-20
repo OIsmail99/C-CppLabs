@@ -1,0 +1,21 @@
+//givens: ASCII range for lowercase chars (97-122), and (65-90) for uppercase.
+//The difference between lowercase and uppercase of the same character is always 32.
+
+void osamaLowerToUpper(char text[]){
+int i = 0;
+while(text[i] != '\0'){
+    if (text[i] >= 97 && text[i] <= 122){
+        text[i] -= 32;
+    }
+    i++;
+}
+
+void osamaUpperToLower(char text[]){
+    int i =0;
+    while(text[i] != '\0'){ //iterating over the String
+        if(text[i] >= 65 && text[i] <= 90){
+            text[i] = text[i] + 32;
+        }
+        i++;
+    }
+}
