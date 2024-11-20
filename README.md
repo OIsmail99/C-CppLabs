@@ -1,1 +1,1 @@
-Introduction To C Programming Course Labs
+These are my lab solutions to the "Introduction to Programming using C" ITI Course.
