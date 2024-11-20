@@ -1,0 +1,11 @@
+void osamaStrcat(char dest[], char src[]){
+int i = 0; //index of src
+int j = strlen(dest);
+
+while(src[i] != '\0' ){
+    dest[j] = src[i]; //current destination's terminator will be overwritten.
+    i++;
+    j++;
+}
+dest[j] = '\0'; //resetting terminator for the destination.
+}
