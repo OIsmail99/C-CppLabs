@@ -1,0 +1,26 @@
+int OsamaStrcmp(char str1[], char str2[]){
+//returns -1 if first string comes before second string in the dictionary
+//returns 1 if it comes after it.
+//returns 0 if two words are the same.
+
+
+//first checking the two strings lengths
+    if(osamaStrlen(str1) < osamaStrlen(str2)){
+        return -1;
+    }
+    if(osamaStrlen(str1) > osamaStrlen(str2)){
+        return 1;
+    }
+
+//if both are of the same length, compare character by character.
+for(int i =0; str1[i] != '\0'; i++){
+
+    if(str1[i] > str2[i]){
+        return 1;
+    }
+    if(str1[i] < str2[i]){
+        return -1;
+    }
+}
+return 0; //if both strings are exactly the same.
+}
