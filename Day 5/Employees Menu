@@ -1,0 +1,178 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <conio.h>
+#include <windows.h>
+#define UP 72
+#define DOWN 80
+#define ESC 27
+#define ENTER 13
+
+
+
+typedef struct Employee{
+    int id;
+    char name[50];
+    int age;
+}Employee;
+
+static Employee employees[100];
+
+//red is 4, white is 15 .. from the header file but for some reason couldn't be preprocessed.
+void setColor(int color_num){
+    // Get the console handle
+HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
+
+// Set text color to bright green
+SetConsoleTextAttribute(hConsole,color_num);
+}
+
+void createEmployee(){
+static int index = 0;
+system("cls");
+printf("CREATING A NEW EMPLOYEE\n");
+printf("What is the ID of the new employee? ");
+int new_id;
+scanf("%d", &new_id);
+
+getchar();
+printf("What is the name of the new employee? ");
+char new_name[50];
+scanf("%[^\n]", &new_name);
+getchar();
+printf("How old is the new employee? ");
+int new_age;
+scanf("%d", &new_age);
+getchar();
+employees[index].id = new_id;
+strcpy(employees[index].name, new_name);
+employees[index].age = new_age;
+index++;
+}
+
+void displayEmployees(){
+int i =0;
+while(employees[i].name != 0){
+    printf("Employee number %d\n", i+1);
+    printf("ID: %d\n", employees[i].id);
+    printf("Name: %s\n", employees[i].name);
+    printf("Age: %d\n", employees[i].age);
+    printf("**************************");
+    return;
+}
+printf("NO EMPLOYEES ADDED YET!");
+}
+
+void displayMenu(int cursor){
+
+    system("cls"); //clearing the terminal every time func is called.
+    setColor(15); //code for white
+
+    printf("\n\n\n\n\n");
+
+
+    if(cursor==0){
+        setColor(4); //code for red, because I like it ;)
+        printf("\t\t\t\t\t\tNEW\n\n\n");
+        setColor(15);
+        printf("\t\t\t\t\t\tDISPLAY\n\n\n");
+        printf("\t\t\t\t\t\tEXIT\n\n\n");
+        printf("\t\t\tNavigate with Up and Down. Exit with either ESC or EXIT\n\n\n");
+
+    }
+    if(cursor==1){
+
+        printf("\t\t\t\t\t\tNEW\n\n\n");
+        setColor(4);
+        printf("\t\t\t\t\t\tDISPLAY\n\n\n");
+        setColor(15);
+        printf("\t\t\t\t\t\tEXIT\n\n\n");
+        printf("\t\t\tNavigate with Up and Down. Exit with either ESC or EXIT\n\n\n");
+
+    }
+    if(cursor==2){
+        printf("\t\t\t\t\t\tNEW\n\n\n");
+        printf("\t\t\t\t\t\tDISPLAY\n\n\n");
+        setColor(4);
+        printf("\t\t\t\t\t\tEXIT\n\n\n");
+        setColor(15);
+        printf("\t\t\tNavigate with Up and Down. Exit with either ESC or EXIT\n\n\n");
+
+    }
+}
+
+int main(){
+
+
+
+
+int cursor = 0;
+displayMenu(cursor);
+
+
+
+int flag = 1;
+
+while(flag){
+//displayMenu(cursor);
+
+char c = getch();
+//printf("%d\n", c);
+if (c == -32){
+        c = getch();
+  //printf("%d", c);
+}
+
+ switch(c){
+case UP:
+    cursor--;
+    if(cursor == -1){ //wrapping down the cursor to point to EXIT
+        cursor = 2;
+    }
+    displayMenu(cursor);
+    break;
+
+case DOWN:
+    cursor++;
+    if(cursor == 3){
+        cursor = 0;
+    }
+    displayMenu(cursor);
+    break;
+
+case ESC:
+    flag = 0;
+    break;
+
+
+case ENTER:
+    if(cursor == 0){
+
+        int endFlag = 0;
+
+        while(!endFlag){
+        createEmployee();
+        char decision;
+        printf("Do you want to add another Employee? (y/n): ");
+        scanf("%c", &decision);
+        if(decision == 'n'){
+            endFlag = 1;
+        }
+        }
+
+    }
+    if(cursor == 2){
+        flag = 0;
+    }
+    if(cursor == 1){
+        system("cls");
+        printf("menu Displayed");
+    }
+    break;
+
+
+}
+}
+setColor(15);
+
+return 0;
+}
