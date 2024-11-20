@@ -1,0 +1,13 @@
+void osamaStrcpy(char dest[], char source[],int dest_size){
+
+    int i = 0;
+    if( osamaStrlen(source) < dest_size){ //source should be less than destination size
+        for(i=0; source[i] != '\0'; i++){
+            dest[i] = source[i];
+        }
+    dest[i] = '\0';
+    }
+    else{
+        printf("source is less than destination.");
+    }
+}
