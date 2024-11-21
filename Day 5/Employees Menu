@@ -51,7 +51,7 @@ index++;
 
 void displayEmployees(){
 int i =0;
-while(employees[i].name != 0){
+while(employees[i].age != 0){
     printf("Employee number %d\n", i+1);
     printf("ID: %d\n", employees[i].id);
     printf("Name: %s\n", employees[i].name);
@@ -101,8 +101,6 @@ void displayMenu(int cursor){
 }
 
 int main(){
-
-
 
 
 int cursor = 0;
@@ -165,7 +163,7 @@ case ENTER:
     }
     if(cursor == 1){
         system("cls");
-        printf("menu Displayed");
+        displayEmployees();
     }
     break;
 
@@ -176,3 +174,4 @@ setColor(15);
 
 return 0;
 }
+
