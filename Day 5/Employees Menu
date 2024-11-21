@@ -7,6 +7,12 @@
 #define ESC 27
 #define ENTER 13
 #define BACKSPACE 8
+#define NEW 0
+#define DISPLAY 1
+#define MODIFY 2
+#define DELETE 3
+#define EXIT 4
+
 //id should be unique
 //
 
@@ -28,7 +34,7 @@ HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
 SetConsoleTextAttribute(hConsole,color_num);
 }
 
-void createEmployee(){
+void createEmployees(){
 static int index = 0;
 system("cls");
 printf("CREATING A NEW EMPLOYEE\n");
@@ -56,47 +62,60 @@ index++;
 }
 
 
-/* void modifyEmployee(){
+void modifyEmployees(){
 int old_id;
 int new_id;
 char new_name[50];
-int age;
+int new_age;
+printf("List of Employee IDs\n");
+
+for(int i =0; employees[i].age != NULL; i++){
+    printf("employee %d: %d\n", i+1, employees[i].id);
+}
+
 printf("Enter the ID of the Employee you want to modify: ");
 scanf("%d", &old_id);
+getchar();
 
 int i = 0;
 while(employees[i].id != old_id){ //i = 0
     i++;
 }
 if(employees[i].id == old_id ){
-        int choose = 0;
+        int choice = 0;
         printf("press 1 to change id, 2 to change name, 3 to change age\n");
 
-        scanf("%d", &choose);
+        scanf("%d", &choice);
 
-        switch(choose){
+        switch(choice){
         case 1:
             printf("please enter the new ID: ");
             scanf("%d", &new_id);
+            getchar();
             employees[i].id = new_id;
             break;
 
         case 2:
             printf("please enter the new name: ");
-            scanf("%d", &new_id);
-            employees[i].id = new_id;
+            getchar();
+            scanf("%[^\n]", &new_name);
+            getchar();
+            strcpy(employees[i].name,new_name);
             break;
 
         case 3:
+            printf("please enter the new age: ");
+            scanf("%d", &new_age);
+            getchar();
+            employees[i].age = new_age;
             break;
 
         }
 
-        employees[i].id == new_id
 }
 
 
-}*/
+}
 
 void displayEmployees(){
 int i =0;
@@ -122,28 +141,56 @@ void displayMenu(int cursor){
     printf("\n\n\n\n\n");
 
 
-    if(cursor==0){
+    if(cursor==NEW){
         setColor(4); //code for red, because I like it ;)
         printf("\t\t\t\t\t\tNEW\n\n\n");
         setColor(15);
         printf("\t\t\t\t\t\tDISPLAY\n\n\n");
+        printf("\t\t\t\t\t\tMODIFY\n\n\n");
+        printf("\t\t\t\t\t\tDELETE\n\n\n");
         printf("\t\t\t\t\t\tEXIT\n\n\n");
         printf("\t\t\tNavigate with Up and Down. Exit with either ESC or EXIT\n\n\n");
 
     }
-    if(cursor==1){
+    if(cursor==DISPLAY){
 
         printf("\t\t\t\t\t\tNEW\n\n\n");
         setColor(4);
         printf("\t\t\t\t\t\tDISPLAY\n\n\n");
         setColor(15);
+        printf("\t\t\t\t\t\tMODIFY\n\n\n");
+        printf("\t\t\t\t\t\tDELETE\n\n\n");
         printf("\t\t\t\t\t\tEXIT\n\n\n");
         printf("\t\t\tNavigate with Up and Down. Exit with either ESC or EXIT\n\n\n");
 
     }
-    if(cursor==2){
+     if(cursor==MODIFY){
         printf("\t\t\t\t\t\tNEW\n\n\n");
         printf("\t\t\t\t\t\tDISPLAY\n\n\n");
+        setColor(4);
+        printf("\t\t\t\t\t\tMODIFY\n\n\n");
+        setColor(15);
+        printf("\t\t\t\t\t\tDELETE\n\n\n");
+        printf("\t\t\t\t\t\tEXIT\n\n\n");
+        printf("\t\t\tNavigate with Up and Down. Exit with either ESC or EXIT\n\n\n");
+
+    }
+     if(cursor==DELETE){
+        printf("\t\t\t\t\t\tNEW\n\n\n");
+        printf("\t\t\t\t\t\tDISPLAY\n\n\n");
+        printf("\t\t\t\t\t\tMODIFY\n\n\n");
+        setColor(4);
+        printf("\t\t\t\t\t\tDELETE\n\n\n");
+        setColor(15);
+        printf("\t\t\t\t\t\tEXIT\n\n\n");
+        printf("\t\t\tNavigate with Up and Down. Exit with either ESC or EXIT\n\n\n");
+
+    }
+    if(cursor==EXIT){
+        printf("\t\t\t\t\t\tNEW\n\n\n");
+        printf("\t\t\t\t\t\tDISPLAY\n\n\n");
+        printf("\t\t\t\t\t\tMODIFY\n\n\n");
+        printf("\t\t\t\t\t\tDELETE\n\n\n");
         setColor(4);
         printf("\t\t\t\t\t\tEXIT\n\n\n");
         setColor(15);
@@ -155,14 +202,14 @@ void displayMenu(int cursor){
 int main(){
 
 
-int cursor = 0;
+int cursor = NEW;
+//displayMenu(cursor);
 
 
 
 int flag = 1;
 
 while(flag){
-
 
 displayMenu(cursor);
 
@@ -173,19 +220,21 @@ if (c == -32){
   //printf("%d", c);
 }
 
- switch(c){
+switch(c){
 case UP:
     cursor--;
-    if(cursor == -1){ //wrapping down the cursor to point to EXIT
-        cursor = 2;
+    if(cursor == NEW - 1){ //wrapping down the cursor to point to EXIT
+        cursor = EXIT;
     }
+    //displayMenu(cursor);
     break;
 
 case DOWN:
     cursor++;
-    if(cursor == 3){
-        cursor = 0;
+    if(cursor == EXIT + 1){
+        cursor = NEW;
     }
+    //displayMenu(cursor);
     break;
 
 case ESC:
@@ -194,7 +243,7 @@ case ESC:
 
 
 case ENTER:
-    if(cursor == 0){
+    if(cursor == NEW){
 
         int endFlag = 0;
 
@@ -214,10 +263,10 @@ case ENTER:
         }
 
     }
-    if(cursor == 2){
+    if(cursor == EXIT){
         flag = 0;
     }
-    if(cursor == 1){
+    if(cursor == DISPLAY){
         system("cls");
         displayEmployees();
         char c = getch();
@@ -226,7 +275,20 @@ case ENTER:
             break;
         }
     }
+
+    if(cursor == MODIFY){
+        system("cls");
+        modifyEmployee();
+        char c = getch();
+        if(c == 8){
+            cursor = 0;
+            break;
+        }
+
+    }
+
     break;
+
 
 
 
