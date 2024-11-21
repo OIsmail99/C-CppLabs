@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <conio.h>
 #include <windows.h>
+#include <string.h>
 #define UP 72
 #define DOWN 80
 #define ESC 27
@@ -34,26 +35,70 @@ HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
 SetConsoleTextAttribute(hConsole,color_num);
 }
 
+
+int isValidName(const char* str) {
+    for (int i = 0; str[i] != '\0'; i++) {
+        if (!isalpha(str[i]) && str[i] != ' ') { //if character is not alphabet or space
+            return 0;  // Invalid character found
+        }
+    }
+    return 1;  // All characters are valid (alphabetical and spaces only)
+}
+
 void createEmployees(){
 static int index = 0;
 system("cls");
 printf("CREATING A NEW EMPLOYEE\n");
-printf("What is the ID of the new employee? ");
+printf("What is the ID of the new employee? (positive & not exceeding 100): ");
+/*
 int new_id;
 
+    printf("What is the ID of the new employee? (positive & not exceeding 100): ");
+    while (1) {
+        if (scanf("%d", &new_id) == 1 && new_id > 0 && new_id <= 100) {
+            // Valid input
+            break;
+        } else {
+            // Clear invalid input from the buffer
+            while (getchar() != '\n');
+            printf("Please enter a valid ID (positive & not exceeding 100): ");
+        }
+    }*/
 
-scanf("%d", &new_id);
+ int new_id;
+while(scanf("%d",&new_id) == 0 ||  new_id < 0 || new_id >= 100){
+    getchar();
+    printf("please enter a valid id!: ");
+    getchar();
+}
 
 getchar();
 printf("What is the name of the new employee? ");
 char new_name[50];
-scanf("%[^\n]", &new_name);
-getchar();
 
-printf("How old is the new employee? ");
+while(1){
+        scanf("%[^\n]", &new_name);
+        if(isValidName(new_name) == 1){
+            break;
+        }
+        else{
+      printf("please enter a valid name! (characters only)\n");
+      while(getchar() != '\n');
+        }
+      };
+
+printf("How old is the new employee? (not more than 60) \n");
+
 int new_age;
-scanf("%d", &new_age);
-getchar();
+while(1){
+if(scanf("%d", &new_age)== 1 && new_age > 0 && new_age < 60 ){
+    break;
+}
+else{
+    printf("please enter a valid age!: \n");
+    while(getchar() != '\n');
+}
+}
 
 employees[index].id = new_id;
 strcpy(employees[index].name, new_name);
@@ -202,7 +247,9 @@ void displayMenu(int cursor){
 int main(){
 
 
-int cursor = NEW;
+
+
+ int cursor = NEW;
 //displayMenu(cursor);
 
 
@@ -247,18 +294,50 @@ case ENTER:
 
         int endFlag = 0;
 
-        while(!endFlag){
-        createEmployee();
+        while(endFlag == 0){
+        createEmployees();
+        getchar();
         char decision;
         printf("Do you want to add an Employee? (y/n): ");
+
+        while(1){
+            if(scanf("%c",&decision) == 1){
+                if(decision == 'y'){
+                    break;
+                }
+                else if(decision == 'n'){
+                    endFlag = 1;
+                    printf("ahmad");
+                    break;
+                }
+                else{
+                    printf("invalid input! Do you want to add an Employee? (y/n)\n");
+                    while(getchar() != '\n');
+                }
+            }
+            else{
+                printf("invalid input! Do you want to add an Employee? (y/n)\n");
+                while(getchar() != '\n');
+                break;
+            }
+
+        }
+
+       /*
         scanf("%c", &decision);
         if(decision == 'n'){
             endFlag = 1;
         }
+        if(decision == 'y'){
+            endFlag = 0;
+        }
+
         if(c == 8){
             cursor =0;
             endFlag =1;
         }
+*/
+
 
         }
 
@@ -278,7 +357,7 @@ case ENTER:
 
     if(cursor == MODIFY){
         system("cls");
-        modifyEmployee();
+        modifyEmployees();
         char c = getch();
         if(c == 8){
             cursor = 0;
@@ -287,7 +366,6 @@ case ENTER:
 
     }
 
-    break;
 
 
 
