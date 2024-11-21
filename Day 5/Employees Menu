@@ -6,7 +6,9 @@
 #define DOWN 80
 #define ESC 27
 #define ENTER 13
-
+#define BACKSPACE 8
+//id should be unique
+//
 
 
 typedef struct Employee{
@@ -32,6 +34,8 @@ system("cls");
 printf("CREATING A NEW EMPLOYEE\n");
 printf("What is the ID of the new employee? ");
 int new_id;
+
+
 scanf("%d", &new_id);
 
 getchar();
@@ -39,27 +43,75 @@ printf("What is the name of the new employee? ");
 char new_name[50];
 scanf("%[^\n]", &new_name);
 getchar();
+
 printf("How old is the new employee? ");
 int new_age;
 scanf("%d", &new_age);
 getchar();
+
 employees[index].id = new_id;
 strcpy(employees[index].name, new_name);
 employees[index].age = new_age;
 index++;
 }
 
+
+/* void modifyEmployee(){
+int old_id;
+int new_id;
+char new_name[50];
+int age;
+printf("Enter the ID of the Employee you want to modify: ");
+scanf("%d", &old_id);
+
+int i = 0;
+while(employees[i].id != old_id){ //i = 0
+    i++;
+}
+if(employees[i].id == old_id ){
+        int choose = 0;
+        printf("press 1 to change id, 2 to change name, 3 to change age\n");
+
+        scanf("%d", &choose);
+
+        switch(choose){
+        case 1:
+            printf("please enter the new ID: ");
+            scanf("%d", &new_id);
+            employees[i].id = new_id;
+            break;
+
+        case 2:
+            printf("please enter the new name: ");
+            scanf("%d", &new_id);
+            employees[i].id = new_id;
+            break;
+
+        case 3:
+            break;
+
+        }
+
+        employees[i].id == new_id
+}
+
+
+}*/
+
 void displayEmployees(){
 int i =0;
-while(employees[i].age != 0){
+if(employees[i].age == NULL){
+    printf("NO EMPLOYEES ADDED YET!");
+}
+while(employees[i].age != NULL){
     printf("Employee number %d\n", i+1);
     printf("ID: %d\n", employees[i].id);
     printf("Name: %s\n", employees[i].name);
     printf("Age: %d\n", employees[i].age);
-    printf("**************************");
-    return;
+    printf("**************************\n");
+    i++;
 }
-printf("NO EMPLOYEES ADDED YET!");
+
 }
 
 void displayMenu(int cursor){
@@ -104,14 +156,15 @@ int main(){
 
 
 int cursor = 0;
-displayMenu(cursor);
 
 
 
 int flag = 1;
 
 while(flag){
-//displayMenu(cursor);
+
+
+displayMenu(cursor);
 
 char c = getch();
 //printf("%d\n", c);
@@ -126,7 +179,6 @@ case UP:
     if(cursor == -1){ //wrapping down the cursor to point to EXIT
         cursor = 2;
     }
-    displayMenu(cursor);
     break;
 
 case DOWN:
@@ -134,7 +186,6 @@ case DOWN:
     if(cursor == 3){
         cursor = 0;
     }
-    displayMenu(cursor);
     break;
 
 case ESC:
@@ -150,11 +201,16 @@ case ENTER:
         while(!endFlag){
         createEmployee();
         char decision;
-        printf("Do you want to add another Employee? (y/n): ");
+        printf("Do you want to add an Employee? (y/n): ");
         scanf("%c", &decision);
         if(decision == 'n'){
             endFlag = 1;
         }
+        if(c == 8){
+            cursor =0;
+            endFlag =1;
+        }
+
         }
 
     }
@@ -164,8 +220,15 @@ case ENTER:
     if(cursor == 1){
         system("cls");
         displayEmployees();
+        char c = getch();
+        if(c == 8){
+            cursor = 0;
+            break;
+        }
     }
     break;
+
+
 
 
 }
@@ -174,4 +237,3 @@ setColor(15);
 
 return 0;
 }
-
