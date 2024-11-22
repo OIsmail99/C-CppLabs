@@ -13,10 +13,8 @@
 #define MODIFY 2
 #define DELETE 3
 #define EXIT 4
-
-//id should be unique
-//
-
+#define SIZE 100 //array size
+static int index = 0;
 
 typedef struct Employee{
     int id;
@@ -24,7 +22,7 @@ typedef struct Employee{
     int age;
 }Employee;
 
-static Employee employees[100];
+static Employee employees[SIZE];
 
 //red is 4, white is 15 .. from the header file but for some reason couldn't be preprocessed.
 void setColor(int color_num){
@@ -56,7 +54,6 @@ return 1; //id is unique.
 }
 
 void createEmployees(){
-static int index = 0;
 system("cls");
 printf("CREATING A NEW EMPLOYEE\n");
 printf("What is the ID of the new employee? (unique & not exceeding 100): ");
@@ -192,6 +189,29 @@ if(employees[i].id == old_id ){
 
 }
 
+void deleteEmployees(int input_id){
+int i = 0;
+
+
+
+while(employees[i].id != input_id){
+    i++;
+}
+// 1 2 3 4 5 6 7 8 9 //[2]
+
+if(i == SIZE){
+    printf("employee with id %d not found!", input_id);
+}
+
+if(employees[i].id == input_id){
+
+    for(int j = i; j < SIZE -1 ; j++){
+      employees[j] = employees[j+1];
+    }
+}
+
+}
+
 void displayEmployees(){
 int i =0;
 if(employees[i].age == NULL){
@@ -274,6 +294,8 @@ void displayMenu(int cursor){
     }
 }
 
+
+
 int main(){
 
 
@@ -352,52 +374,50 @@ case ENTER:
             }
 
         }
-
-       /*
-        scanf("%c", &decision);
-        if(decision == 'n'){
-            endFlag = 1;
         }
-        if(decision == 'y'){
-            endFlag = 0;
         }
+///////////////////////////////////////////////////////////////////////////////
 
-        if(c == 8){
-            cursor =0;
-            endFlag =1;
-        }
-*/
-
-
-        }
-
-    }
     if(cursor == EXIT){
         flag = 0;
     }
+//////////////////////////////////////////////////////////////////////////////
     if(cursor == DISPLAY){
         system("cls");
         displayEmployees();
         char c = getch();
-        if(c == 8){
-            cursor = 0;
+        if(c == BACKSPACE){
+            cursor = NEW;
             break;
         }
     }
+///////////////////////////////////////////////////////////////////////////////
 
     if(cursor == MODIFY){
         system("cls");
         modifyEmployees();
         char c = getch();
-        if(c == 8){
-            cursor = 0;
+        if(c == BACKSPACE){
+            cursor = NEW;
             break;
         }
 
     }
 
+///////////////////////////////////////////////////////////////////////////////////
+    if(cursor == DELETE){
+        system("cls");
+        printf("Enter the id of the employee you want to delete: ");
+        int input_id;
+        scanf("%d", &input_id);
+        deleteEmployees(input_id);
+        char c = getch();
+        if(c == BACKSPACE){
+            cursor = NEW;
+            break;
+        }
 
-
+    }
 
 
 
