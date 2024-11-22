@@ -45,11 +45,21 @@ int isValidName(const char* str) {
     return 1;  // All characters are valid (alphabetical and spaces only)
 }
 
+int isUniqueID(int input){
+
+for(int i = 0; employees[i].age != NULL; i++){
+    if(employees[i].id == input){
+        return 0; //id not unique.
+    }
+}
+return 1; //id is unique.
+}
+
 void createEmployees(){
 static int index = 0;
 system("cls");
 printf("CREATING A NEW EMPLOYEE\n");
-printf("What is the ID of the new employee? (positive & not exceeding 100): ");
+printf("What is the ID of the new employee? (unique & not exceeding 100): ");
 /*
 int new_id;
 
@@ -65,9 +75,8 @@ int new_id;
         }
     }*/
 
- int new_id;
-while(scanf("%d",&new_id) == 0 ||  new_id < 0 || new_id >= 100){
-    getchar();
+int new_id;
+while(scanf("%d",&new_id) == 0 ||  new_id < 0 || new_id >= 100 || isUniqueID(new_id) == 0){
     printf("please enter a valid id!: ");
     getchar();
 }
@@ -112,9 +121,10 @@ int old_id;
 int new_id;
 char new_name[50];
 int new_age;
+
 printf("List of Employee IDs\n");
 
-for(int i =0; employees[i].age != NULL; i++){
+for(int i =0; employees[i].age != NULL; i++){  //list of all employees
     printf("employee %d: %d\n", i+1, employees[i].id);
 }
 
@@ -123,11 +133,16 @@ scanf("%d", &old_id);
 getchar();
 
 int i = 0;
-while(employees[i].id != old_id){ //i = 0
+while(employees[i].id != old_id){ //traversing the list to get to the id of the person.
     i++;
 }
 if(employees[i].id == old_id ){
         int choice = 0;
+
+
+        int flag = 1;
+
+        while(flag == 1){
         printf("press 1 to change id, 2 to change name, 3 to change age\n");
 
         scanf("%d", &choice);
@@ -137,8 +152,16 @@ if(employees[i].id == old_id ){
             printf("please enter the new ID: ");
             scanf("%d", &new_id);
             getchar();
-            employees[i].id = new_id;
-            break;
+            if(isUniqueID(new_id) == 1)
+            {employees[i].id = new_id;
+                flag = 0;
+                break;
+            }
+            else{
+                printf("invalid input!\n");
+                break;
+            }
+
 
         case 2:
             printf("please enter the new name: ");
@@ -146,6 +169,7 @@ if(employees[i].id == old_id ){
             scanf("%[^\n]", &new_name);
             getchar();
             strcpy(employees[i].name,new_name);
+            flag = 0;
             break;
 
         case 3:
@@ -153,8 +177,14 @@ if(employees[i].id == old_id ){
             scanf("%d", &new_age);
             getchar();
             employees[i].age = new_age;
+            flag = 0;
             break;
 
+        default:
+            printf("invalid input!\n");
+            break;
+
+        }
         }
 
 }
