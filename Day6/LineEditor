@@ -1,0 +1,137 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <conio.h>
+#include <windows.h>
+#define UP 72
+#define DOWN 80
+#define LEFT 75
+#define RIGHT 77
+#define INSERT 82
+#define HOME_ZERO 48
+#define END_ONE 49
+#define BACKSPACE 8
+#define DELETE 83
+#define ESC 27
+#define SIZE 20 //line_size
+static char x=1;
+static char y=1;
+static char mode;
+
+
+// Moves the cursor to the specified x and y coordinates
+void gotoxy(int x, int y) {
+    COORD coord;
+    coord.X = x - 1; // Convert to 0-based
+    coord.Y = y - 1;
+    SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), coord);
+}
+
+// Returns the current cursor X position
+int wherex() {
+    CONSOLE_SCREEN_BUFFER_INFO csbi;
+    if (GetConsoleScreenBufferInfo(GetStdHandle(STD_OUTPUT_HANDLE), &csbi)) {
+        return csbi.dwCursorPosition.X + 1; // Convert to 1-based
+    }
+    return -1; // Error
+}
+
+// Returns the current cursor Y position
+int wherey() {
+    CONSOLE_SCREEN_BUFFER_INFO csbi;
+    if (GetConsoleScreenBufferInfo(GetStdHandle(STD_OUTPUT_HANDLE), &csbi)) {
+        return csbi.dwCursorPosition.Y + 1; // Convert to 1-based
+    }
+    return -1; // Error
+}
+
+void displayLine(char line[]){
+    char len = strlen(line);
+    for(char i = 0; i < len;i++){
+            printf("%c",line[i]);
+
+    }
+
+}
+
+void deleteLast(char line[]){
+   int i = 0;
+   while(line[i] != '\0'){
+    i++;
+   }
+   line[i-1] = '\0';
+   line[i] = NULL;
+}
+
+void append(char line[], char c){
+    char i = strlen(line);
+    line[i] = c;
+    line[i+1] = '\0';
+}
+
+void insert(char line[], char c, int pos){
+    line[pos] = c;
+}
+
+int main()
+{
+
+
+
+char line[SIZE] = {0};
+
+
+
+
+
+int flag = 1;
+while(flag == 1){
+    system("cls");
+    displayLine(line);
+    gotoxy(x,y);
+
+    char c = getch();
+
+     if(c == -32){
+         c = getch();
+    }
+
+    switch(c){
+
+case RIGHT:
+    x++;
+    break;
+
+case LEFT:
+    x--;
+    break;
+
+case HOME_ZERO:
+    x = 1;
+    break;
+
+case END_ONE:
+    break;
+
+case INSERT:
+    break;
+
+case DELETE:
+    break;
+
+case ESC:
+    flag = 0;
+    break;
+
+default: //editing the line
+    append(line, c);
+    x++;
+    break;
+
+
+    }
+    }
+
+    return 0;
+}
