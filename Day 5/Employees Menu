@@ -203,6 +203,10 @@ if(employees[i].id == old_id ){
             printf("please enter the new age: ");
             scanf("%d", &new_age);
             getchar();
+            while(isValidAge(new_age) == 0){
+             printf("Please enter a valid age! ");
+            scanf("%d", &new_age);
+            }
             employees[i].age = new_age;
             flag = 0;
             break;
@@ -327,9 +331,6 @@ void displayMenu(int cursor){
 
 
 int main(){
-
-
-
 
 int cursor = NEW;
 //displayMenu(cursor);
