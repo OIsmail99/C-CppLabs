@@ -71,6 +71,11 @@ void append(char line[], char c){
 }
 
 void insert(char line[], char c, int pos){
+    for (int i = strlen(line); i >= pos; i--) {
+        line[i + 1] = line[i];
+    }
+
+    // Insert the new character at the specified position
     line[pos] = c;
 }
 
@@ -112,6 +117,7 @@ case HOME_ZERO:
     break;
 
 case END_ONE:
+    x = strlen(line) + 1;
     break;
 
 case INSERT:
@@ -124,9 +130,15 @@ case ESC:
     flag = 0;
     break;
 
-default: //editing the line
+default:
+    if(x == strlen(line) + 1){ //editing the line
     append(line, c);
     x++;
+    }
+    else{
+        insert(line,c,x);
+    }
+
     break;
 
 
