@@ -17,7 +17,7 @@
 #define BACKSPACE 8
 #define DELETE 83
 #define ESC 27
-#define SIZE 100 //line_size
+#define SIZE 200 //line_size
 static char x=1;
 static char y=1;
 
@@ -136,6 +136,7 @@ default:
         x++;
     }
     break;
+
 
     }
     }
