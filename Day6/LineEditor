@@ -6,6 +6,9 @@
 #include <windows.h>
 #define UP 72
 #define DOWN 80
+#define TAB
+#define CTRL
+#define SHIFT
 #define LEFT 75
 #define RIGHT 77
 #define INSERT 82
@@ -14,10 +17,10 @@
 #define BACKSPACE 8
 #define DELETE 83
 #define ESC 27
-#define SIZE 20 //line_size
+#define SIZE 100 //line_size
 static char x=1;
 static char y=1;
-static char mode;
+
 
 
 // Moves the cursor to the specified x and y coordinates
@@ -26,24 +29,6 @@ void gotoxy(int x, int y) {
     coord.X = x - 1; // Convert to 0-based
     coord.Y = y - 1;
     SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), coord);
-}
-
-// Returns the current cursor X position
-int wherex() {
-    CONSOLE_SCREEN_BUFFER_INFO csbi;
-    if (GetConsoleScreenBufferInfo(GetStdHandle(STD_OUTPUT_HANDLE), &csbi)) {
-        return csbi.dwCursorPosition.X + 1; // Convert to 1-based
-    }
-    return -1; // Error
-}
-
-// Returns the current cursor Y position
-int wherey() {
-    CONSOLE_SCREEN_BUFFER_INFO csbi;
-    if (GetConsoleScreenBufferInfo(GetStdHandle(STD_OUTPUT_HANDLE), &csbi)) {
-        return csbi.dwCursorPosition.Y + 1; // Convert to 1-based
-    }
-    return -1; // Error
 }
 
 void displayLine(char line[]){
@@ -79,18 +64,20 @@ void insert(char line[], char c, int pos){
     line[pos] = c;
 }
 
+void deleteChar(char line[], int pos){
+    int len = strlen(line);
+    for(int i = pos; i < len; i++){
+        line[i] = line[i+1];
+    }
+}
+
 int main()
 {
 
-
-
 char line[SIZE] = {0};
 
-
-
-
-
 int flag = 1;
+
 while(flag == 1){
     system("cls");
     displayLine(line);
@@ -105,7 +92,9 @@ while(flag == 1){
     switch(c){
 
 case RIGHT:
-    x++;
+    if(x < strlen(line)){
+        x++;
+    }
     break;
 
 case LEFT:
@@ -124,11 +113,18 @@ case INSERT:
     break;
 
 case DELETE:
+    deleteChar(line, x);
+    break;
+
+case BACKSPACE:
+    deleteChar(line, x - 1);
+    x--;
     break;
 
 case ESC:
     flag = 0;
     break;
+
 
 default:
     if(x == strlen(line) + 1){ //editing the line
@@ -137,10 +133,9 @@ default:
     }
     else{
         insert(line,c,x);
+        x++;
     }
-
     break;
-
 
     }
     }
