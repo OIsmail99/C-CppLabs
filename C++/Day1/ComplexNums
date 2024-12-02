@@ -1,0 +1,76 @@
+#include <iostream>
+
+using namespace std;
+
+class Complex{
+
+    int real;
+    int imag;
+
+public:
+int getReal(){
+    return real;
+}
+
+int getImag(){
+    return imag;
+}
+
+void setReal(int newReal){
+    real = newReal;
+}
+
+void setImag(int newImag){
+    imag = newImag;
+}
+
+void displayComplex(){ //both zeroes --> no data, if real is 0 -->
+    if(real == 0 && imag == 0)
+    {
+        cout<< "no data" <<endl;
+    }
+    else{
+        if(imag > 0){
+            cout<<real << "+" <<imag << endl;
+        }
+        else{
+            cout<<real <<imag << endl;
+        }
+    }
+}
+
+Complex add(Complex c){
+    Complex a;
+    a.imag = this->imag + c.imag;
+    a.real = this->real + c.real;
+    return a;
+}
+
+Complex sub(Complex c){
+    Complex a;
+    a.imag = this->imag - c.imag;
+    a.real = this->real - c.real;
+    return a;
+}
+
+
+};
+
+int main()
+{
+    Complex a;
+    Complex b;
+    a.setImag(20);
+    a.setReal(10);
+
+    b.setImag(15);
+    b.setReal(12);
+
+    a.displayComplex();
+    b.displayComplex();
+
+    Complex d = a.sub(b);
+    d.displayComplex();
+
+    return 0;
+}
