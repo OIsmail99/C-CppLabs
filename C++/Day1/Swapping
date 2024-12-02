@@ -1,0 +1,44 @@
+#include <iostream>
+
+using namespace std;
+
+void swap_val(int num1, int num2){
+    int temp = num1;
+    num1 = num2;
+    num1 = temp;
+}
+
+void swap_ptr(int *num1, int *num2){
+    int temp = *num1;
+    *num1 = *num2;
+    *num2 = temp;
+}
+
+void swap_ref(int &num1, int &num2){
+    int temp = num1;
+    num1 = num2;
+    num2 = temp;
+}
+
+int main()
+{
+    int num1 = 5;
+    int num2 = 10;
+
+    swap_ref(num1,num2);
+    cout<<"num1: " << num1 << " and num2: " << num2<<endl;
+    num1 = 5;
+    num2 = 10;
+
+    swap_ptr(&num1,&num2);
+
+    cout<<"num1: " << num1 << " and num2: " << num2<<endl;
+    num1 = 5;
+    num2 = 10;
+
+    swap_val(num1,num2);
+    cout<<"num1: " << num1 << " and num2: " << num2<<endl;
+
+
+    return 0;
+}
