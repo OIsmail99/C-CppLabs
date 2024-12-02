@@ -24,17 +24,24 @@ void setImag(int newImag){
     imag = newImag;
 }
 
-void displayComplex(){ //both zeroes --> no data, if real is 0 -->
+void displayComplex(){ //-3 and 0
     if(real == 0 && imag == 0)
     {
         cout<< "no data" <<endl;
     }
+    else if(real == 0){
+        cout << imag << "i"<<endl;
+    }
+    else if(imag == 0){
+        cout << real <<endl;
+    }
+
     else{
         if(imag > 0){
-            cout<<real << "+" <<imag << endl;
+            cout<<real << "+" <<imag << "i" << endl;
         }
         else{
-            cout<<real <<imag << endl;
+            cout<<real << imag << "i"<< endl;
         }
     }
 }
@@ -62,15 +69,26 @@ int main()
     Complex b;
     a.setImag(20);
     a.setReal(10);
+    cout<< a.getImag() << endl;
+    cout<< a.getReal() << endl;
 
     b.setImag(15);
     b.setReal(12);
+    cout<< b.getImag() << endl;
+    cout<< b.getReal() << endl;
 
     a.displayComplex();
     b.displayComplex();
 
     Complex d = a.sub(b);
     d.displayComplex();
+    cout<< d.getImag() << endl;
+    cout<< d.getReal() << endl;
+
+    Complex comp;
+    comp.setImag(0);
+    comp.setReal(-3);
+    comp.displayComplex();
 
     return 0;
 }
