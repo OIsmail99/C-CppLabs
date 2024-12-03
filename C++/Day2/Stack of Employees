@@ -1,0 +1,203 @@
+#include <iostream>
+#include <conio.h>
+#include <windows.h>
+#define UP 72
+#define DOWN 80
+#define ESC 27
+#define ENTER 13
+#define BACKSPACE 8
+#define PUSH 0
+#define POP 1
+#define DISPLAY 2
+#define DELETE 3
+#define EXIT 4
+#define SIZE 100 //array size
+using namespace std;
+static int cursor=0;
+
+
+
+typedef struct Employee{
+    int id;
+    char name[50];
+    int age;
+}Employee;
+
+class Stack{
+private:
+    int top;
+    int n;
+    Employee *arr;
+    static int counter;
+
+public:
+    Stack(int arr_size=10){
+        top = -1;
+        this->n = arr_size;
+        arr = new Employee[n];
+        counter++;
+        cout<<"creating stack object number: " <<counter<<endl;
+    }
+    ~Stack(){
+    delete []arr;
+    cout<<"deleting stack object number: " << counter<<endl;
+    counter--;
+    }
+    int push(Employee emp){
+        if(top == n){ //Stack is full.
+            return 0;
+        }
+        top++;
+        arr[top] = emp;
+        return 1;
+    }
+
+    int pop(Employee & popped){
+        if(top == -1){
+            return 0;
+        }
+        top--;
+        popped = arr[top];
+        return 1;
+    }
+
+    void displayStack(){
+        if(top == -1){
+         cout<<"Stack is empty"<<endl;
+        }
+        else{
+        for(int i=0; i <= top; i++){
+            cout<<"id: "<<arr[i].id << ", name: "<< arr[i].name<< ", age: "<< arr[i].age <<endl;
+        }
+        }
+    }
+
+};
+int Stack::counter =0;
+static Stack s;
+
+//red is 4, white is 15 .. from the header file but for some reason couldn't be preprocessed.
+void setColor(int color_num){
+    // Get the console handle
+HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
+
+// Set text color to bright green
+SetConsoleTextAttribute(hConsole,color_num);
+}
+
+void displayMenu(int cursor){
+    if(cursor==PUSH){
+    setColor(4);
+     cout<<"Push"<<endl;
+    setColor(15);
+     cout<<"Pop"<<endl;
+     cout<<"Display"<<endl;
+    }
+    else if(cursor==POP){
+     cout<<"Push"<<endl;
+    setColor(4);
+     cout<<"Pop"<<endl;
+     setColor(15);
+     cout<<"Display"<<endl;
+    }
+    else if(cursor==DISPLAY){
+     cout<<"Push"<<endl;
+     cout<<"Pop"<<endl;
+     setColor(4);
+     cout<<"Display"<<endl;
+     setColor(15);
+    }
+
+
+}
+
+int CreateEmployee(){
+    cout<<"CREATING A NEW EMPLOYEE"<<endl;
+    Employee e;
+    cout<<"Enter the Name: ";
+    cin >> e.name;
+    cout<<"Enter the ID: ";
+    cin >> e.id;
+    cout<<"Enter the Age: ";
+    cin >> e.age;
+    s.push(e);
+    return 1;
+}
+
+void displayEmployees(){
+    s.displayStack();
+}
+
+int removeEmployee(){
+    Employee e;
+    if(s.pop(e) == 1){
+        return 1;
+    }
+    return 0;
+    ;
+
+}
+
+int main()
+{
+    cursor = PUSH;
+    int flag = 1;
+    while(flag != 0){
+        system("cls");
+        displayMenu(cursor);
+        char c = getch();
+        if(c == -32){
+            c = getch();
+        }
+
+
+        switch(c){
+    case UP:
+        cursor--;
+        if(cursor < PUSH){
+            cursor = DISPLAY;
+        }
+        break;
+    case DOWN:
+        cursor++;
+        if(cursor > DISPLAY){
+            cursor = PUSH;
+        }
+        break;
+
+    case ENTER:
+        system("cls");
+
+        if(cursor == PUSH){
+            CreateEmployee();
+
+        }
+
+        else if(cursor == POP){
+           if(removeEmployee() == 1) cout<<"Employee removed";
+            else cout<<"Stack is Empty";
+
+            Sleep(5000);
+        }
+
+        else if(cursor == DISPLAY){
+            displayEmployees();
+            Sleep(5000);
+            cursor = PUSH;
+        }
+        break;
+    case BACKSPACE:
+        break;
+    case ESC:
+        flag == 0;
+        break;
+    default:
+        break;
+
+        };
+
+    }
+
+
+    return 0;
+}
