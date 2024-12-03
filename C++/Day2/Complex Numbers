@@ -1,0 +1,109 @@
+#include <iostream>
+
+using namespace std;
+
+class Complex{
+
+    int real;
+    int imag;
+
+public:
+
+Complex(int real, int imag){
+    this->real = real;
+    this -> imag = imag;
+}
+
+~Complex(){
+    cout<<"Complex Destroyed";
+}
+
+int getReal(){
+    return real;
+}
+
+int getImag(){
+    return imag;
+}
+
+void setReal(int newReal){
+    real = newReal;
+}
+
+void setImag(int newImag){
+    imag = newImag;
+}
+
+void setComplex(int newReal, int newImag){
+    this->real = newReal;
+    this->imag = newImag;
+}
+
+void displayComplex(){
+    if(real == 0 && imag == 0)
+    {
+        cout<< "no data" <<endl;
+    }
+    else if(real == 0){
+        cout << imag << "i"<<endl;
+    }
+    else if(imag == 0){
+        cout << real <<endl;
+    }
+
+    else{
+        if(imag > 0){
+            cout<<real << "+" <<imag << "i" << endl;
+        }
+        else{
+            cout<<real << imag << "i"<< endl;
+        }
+    }
+}
+
+Complex add(Complex c){
+    Complex a;
+    a.imag = this->imag + c.imag;
+    a.real = this->real + c.real;
+    return a;
+}
+
+Complex sub(Complex c){
+    Complex a;
+    a.imag = this->imag - c.imag;
+    a.real = this->real - c.real;
+    return a;
+}
+
+
+};
+
+int main()
+{
+    Complex a;
+    Complex b;
+    a.setImag(20);
+    a.setReal(10);
+    cout<< a.getImag() << endl;
+    cout<< a.getReal() << endl;
+
+    b.setImag(15);
+    b.setReal(12);
+    cout<< b.getImag() << endl;
+    cout<< b.getReal() << endl;
+
+    a.displayComplex();
+    b.displayComplex();
+
+    Complex d = a.sub(b);
+    d.displayComplex();
+    cout<< d.getImag() << endl;
+    cout<< d.getReal() << endl;
+
+    Complex comp;
+    comp.setImag(0);
+    comp.setReal(-3);
+    comp.displayComplex();
+
+    return 0;
+}
