@@ -176,20 +176,19 @@ int main()
         else if(cursor == POP){
            if(removeEmployee() == 1) cout<<"Employee removed";
             else cout<<"Stack is Empty";
-
-            Sleep(5000);
+            if(getch() == BACKSPACE)
+            cursor = PUSH;
         }
 
         else if(cursor == DISPLAY){
             displayEmployees();
-            Sleep(5000);
+            if(getch() == BACKSPACE)
             cursor = PUSH;
+            break;
         }
         break;
-    case BACKSPACE:
-        break;
     case ESC:
-        flag == 0;
+        flag = 0;
         break;
     default:
         break;
