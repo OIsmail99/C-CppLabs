@@ -1,0 +1,139 @@
+#include <iostream>
+
+using namespace std;
+
+class Complex{
+
+    int real;
+    int imag;
+
+public:
+
+Complex(int real=0, int imag=0){ //constructor
+    this->real = real;
+    this -> imag = imag;
+}
+
+
+~Complex() //destructor
+{
+    cout << "Complex (" << real << ", " << imag << ") Destroyed\n"<<endl;
+}
+
+
+Complex(const Complex &source){ //copy constructor
+    this->real = source.real;
+    this->imag = source.imag;
+
+}
+
+int getReal(){
+    return real;
+}
+
+int getImag(){
+    return imag;
+}
+
+void setReal(int newReal){
+    real = newReal;
+}
+
+void setImag(int newImag){
+    imag = newImag;
+}
+
+void setComplex(int newReal, int newImag){
+    this->real = newReal;
+    this->imag = newImag;
+}
+
+void displayComplex(){
+    if(real == 0 && imag == 0)
+    {
+        cout<< "no data" <<endl;
+    }
+    else if(real == 0){
+        cout << imag << "i"<<endl;
+    }
+    else if(imag == 0){
+        cout << real <<endl;
+    }
+
+    else{
+        if(imag > 0){
+            cout<<real << "+" <<imag << "i" << endl;
+        }
+        else{
+            cout<<real << imag << "i"<< endl;
+        }
+    }
+}
+
+Complex add(Complex c){
+    Complex a;
+    a.imag = this->imag + c.imag;
+    a.real = this->real + c.real;
+    return a;
+}
+
+Complex sub(Complex c){
+    Complex a;
+    a.imag = this->imag - c.imag;
+    a.real = this->real - c.real;
+    return a;
+}
+Complex operator++(){ //prefix .. incrementing then returning
+    this->real++;
+    this->imag++;
+    return *this;
+}
+
+Complex operator++(int x){ //postfix .. returning the old value then incrementing.
+    Complex c;
+    c.imag = this->imag;
+    c.real = this->real;
+    this->imag++;
+    this->real++;
+    return c;
+}
+
+Complex operator+(Complex c){ //overloading the + operator
+    Complex a;
+    a.real = this->real + c.real;
+    a.imag = this->imag + c.imag;
+    return a;
+}
+
+Complex operator-(Complex c){ //overloading the - operator
+    Complex a;
+    a.real = this->real - c.real;
+    a.imag = this->imag - c.imag;
+    return a;
+}
+/*Complex operator =(Complex c){
+    this->real = c.real;
+    this->imag = c.imag;
+    return *this;
+}*/
+
+
+
+
+};
+
+int main()
+{
+    Complex a(5,3);
+    Complex b(2,4);
+    Complex c = a - b;
+    Complex d = a + b;
+    a.displayComplex();
+    b.displayComplex();
+    c.displayComplex();
+    d.displayComplex();
+
+
+
+    return 0;
+}
