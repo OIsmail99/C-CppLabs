@@ -7,15 +7,7 @@ private:
     char *str;
     int str_len;
 public:
-    int Strlen(){
-    char i = 0;
-    while(this->str[i] != '\0'){
-        i++;
-    }
-    return i;
-
-    }
-
+    //constructor, taking input and assigning it to a dynamic array with a char * pointer str
     OString(char * input){
     int string_len = 0;
     while(input[string_len] != '\0')
@@ -28,16 +20,60 @@ public:
         this->str[i] = input[i];
     }
     }
+    ~OString(){ //destructor
+    delete []str;
+    }
 
+    //length of the current object, this could be static as well.
+    int Strlen(){
+    char i = 0;
+    while(this->str[i] != '\0'){
+        i++;
+    }
+    return i;
+
+    }
+
+
+    //appending to the current object then resetting the null terminator.
     void append(char * input){
+    int input_size = 0;
+    while(input[input_size] != '\0'){
+        input_size++;
+    }
+
+    int new_size= input_size + this->Strlen() + 1; //taken into consideration the null terminator.
+    char * output = new char[new_size];
+
+    int i = 0;
+    for(i = 0; i < this->Strlen(); i++){
+        output[i] = this->str[i];
+    }
     int j = 0;
+
+    while(i < new_size){
+        output[i] = input[j];
+        j++;
+        i++;
+    }
+    delete []str;
+    str = output;
+    }
+
+
+
+
+
+
+
+   /* int j = 0;
     int i = 0;
     for(i = this->Strlen();input[j] != '\0';i++){
         str[i] = input[j];
         j++;
     }
     str[i] = '\0';
-    }
+    }*/
 
     void display(){
     int i = 0;
@@ -45,8 +81,14 @@ public:
         cout<<str[i];
         i++;
     }
-
+    cout<<endl;
     }
+   /* bool operator >(){
+    }
+    bool operator <(){
+    }
+    bool operator ==(){
+    }*/
 
 
 };
@@ -54,8 +96,8 @@ public:
 int main()
 {
     OString str = "hello";
-    cout<<str.Strlen()<<endl;
-    str.append(" world");
+    char * str2 = " World";
+    str.append(str2);
     str.display();
 
 
