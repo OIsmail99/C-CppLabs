@@ -1,0 +1,70 @@
+#include <iostream>
+
+using namespace std;
+//Dynamic list, never full, always resizes itself.
+class List{
+private:
+    int * arr;
+    int top;
+    int length;
+public:
+    List(){
+    top = 0;
+    length = 5;
+    arr = new int[length];
+    }
+
+    void push(int val){ //making a new array every time you push.
+     if(top == this->length){
+        int newLength = length+5;
+        int* new_arr = new int[newLength];
+        for(int i=0; i < this->top ;i++){
+            new_arr[i] = this->arr[i];
+        }
+        delete []arr;
+        arr = new_arr;
+        length = newLength;
+    }
+    arr[top] = val;
+    top++;
+
+    }
+    void pop(){
+        if(top == 0){
+            cout<<"Stack is empty"<<endl;
+            return;
+        }
+        top--;
+        arr[top] = 0;
+    }
+
+    int getSize(){
+        return top;
+    }
+    void display(){
+        cout<<"List Elements are: "<<endl;
+        for(int i =0; i < this->top; i++){
+            cout<<arr[i]<<endl;
+        }
+    }
+
+
+
+};
+
+
+int main()
+{
+    List l;
+    l.push(1);
+    l.push(3);
+    l.push(7);
+    l.push(1);
+    l.push(1);
+    l.push(1);
+    l.push(1);
+    l.pop();
+    l.display();
+    cout<<l.getSize();
+    return 0;
+}
