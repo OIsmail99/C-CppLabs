@@ -10,6 +10,18 @@ int strlen(const char * input){
         return i; //length
     }
 
+void Strcat(char *dest, char *src){
+int i = 0; //index of src
+int j = strlen(dest);
+
+while(src[i] != '\0' ){
+    dest[j] = src[i]; //current destination's terminator will be overwritten.
+    i++;
+    j++;
+}
+dest[j] = '\0'; //resetting terminator for the destination.
+}
+
 class OString{
 private:
     char *str;
@@ -18,7 +30,7 @@ private:
 public:
    OString(char * input){ //constructor
    this->str_size = strlen(input);
-   this->str = new char[str_size];
+   this->str = new char[str_size+1];
    for(int i =0; i < str_size; i++){
         str[i] = input[i];
    }
@@ -49,7 +61,7 @@ public:
    cout<<endl;
    }
 
-   void append(char * input){
+   char * append(char * input){
     int new_size = this->str_size + strlen(input);
     char* output = new char[new_size];
     int i =0;
@@ -65,7 +77,33 @@ public:
    delete []this->str;
    this->str = output;
    this->str_size = new_size;
+   return this->str;
    }
+
+
+ OString operator+(const OString& text) const {
+    // Calculate the new size
+    int new_size = this->str_size + text.str_size;
+
+    // Allocate memory for the combined string
+    char* result = new char[new_size + 1];
+
+    // Copy the current string
+    for (int i = 0; i < this->str_size; i++) {
+        result[i] = this->str[i];
+    }
+
+    // Append the other string
+    for (int i = 0; i < text.str_size; i++) {
+        result[this->str_size + i] = text.str[i];
+    }
+
+    // Null-terminate the new string
+    result[new_size] = '\0';
+
+    // Return a new OString object
+    return OString(result);
+}
 
 };
 
@@ -78,7 +116,14 @@ int main()
     str.display();
     cout<<str.oLen();
 */
+/*cout<<str.getSize()<<endl;
 str.append(" Ismail");
 str.display();
+cout<<str.getSize();
+*/
+OString str2 = " Ismail";
+OString newStr = str + str2;
+newStr.display();
+cout<<newStr.oLen();
     return 0;
 }
