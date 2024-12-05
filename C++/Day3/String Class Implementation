@@ -2,104 +2,83 @@
 
 using namespace std;
 
+int strlen(const char * input){
+        int i = 0;
+        while(input[i] != '\0'){
+            i++;
+        }
+        return i; //length
+    }
+
 class OString{
 private:
     char *str;
-    int str_len;
+    int str_size;
+
 public:
-    //constructor, taking input and assigning it to a dynamic array with a char * pointer str
-    OString(char * input){
-    int string_len = 0;
-    while(input[string_len] != '\0')
-    {
-        string_len++;
-    }
-    str = new char[string_len];
-    int i = 0;
-    for(i = 0; i < string_len; i++){
-        this->str[i] = input[i];
-    }
-    }
-    ~OString(){ //destructor
-    delete []str;
-    }
+   OString(char * input){ //constructor
+   this->str_size = strlen(input);
+   this->str = new char[str_size];
+   for(int i =0; i < str_size; i++){
+        str[i] = input[i];
+   }
 
-    //length of the current object, this could be static as well.
-    int Strlen(){
-    char i = 0;
-    while(this->str[i] != '\0'){
-        i++;
-    }
-    return i;
+   }
 
-    }
+   ~OString(){ //destructor
+   delete [] str;
+   }
+
+   OString(const OString &source){ //copy constructor
+    this->str_size = source.str_size;
+   this->str = new char[this->str_size];
+   for(int i =0; i < this->str_size;i++){
+        this->str[i] = source.str[i];
+   }
+   }
+
+   int oLen(){
+   return strlen(this->str);
+   }
 
 
-    //appending to the current object then resetting the null terminator.
-    void append(char * input){
-    int input_size = 0;
-    while(input[input_size] != '\0'){
-        input_size++;
-    }
+   void display(){
+   for(int i = 0; i < this->str_size; i++){
+    cout<<this->str[i];
+   }
+   cout<<endl;
+   }
 
-    int new_size= input_size + this->Strlen() + 1; //taken into consideration the null terminator.
-    char * output = new char[new_size];
-
-    int i = 0;
-    for(i = 0; i < this->Strlen(); i++){
-        output[i] = this->str[i];
-    }
-    int j = 0;
-
-    while(i < new_size){
+   void append(char * input){
+    int new_size = this->str_size + strlen(input);
+    char* output = new char[new_size];
+    int i =0;
+    for(i = 0; i < this->str_size; i++)
+   {
+       output[i] = this->str[i];
+   }
+   for(int j=0; j < strlen(input);j++){
         output[i] = input[j];
-        j++;
         i++;
-    }
-    delete []str;
-    str = output;
-    }
-
-
-
-
-
-
-
-   /* int j = 0;
-    int i = 0;
-    for(i = this->Strlen();input[j] != '\0';i++){
-        str[i] = input[j];
-        j++;
-    }
-    str[i] = '\0';
-    }*/
-
-    void display(){
-    int i = 0;
-    while(this->str[i] != '\0'){
-        cout<<str[i];
-        i++;
-    }
-    cout<<endl;
-    }
-   /* bool operator >(){
-    }
-    bool operator <(){
-    }
-    bool operator ==(){
-    }*/
-
+   }
+   output[i] = '\0';
+   delete []this->str;
+   this->str = output;
+   this->str_size = new_size;
+   }
 
 };
 
 int main()
 {
-    OString str = "hello";
-    char * str2 = " World";
-    str.append(str2);
+
+    OString str = "Osama";
+    /*OString cp(str);
+    cp.display();
     str.display();
-
-
+    cout<<str.oLen();
+*/
+str.append(" Ismail");
+str.display();
     return 0;
 }
