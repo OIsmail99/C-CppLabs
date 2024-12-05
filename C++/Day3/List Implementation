@@ -17,7 +17,16 @@ public:
     delete []arr;
     }
 
-    void push(int val){ //making a new array every time you push.
+    List(const List &source){
+    this->top = source.top;
+    this->length = source.length;
+    this->arr = new int[this->length];
+    for(int i = 0; i < this->length; i++){
+        this->arr[i] = source.arr[i];
+    }
+    }
+
+    void push(int val){ //making a new array every five elements.
      if(top == this->length){
         int newLength = length+5;
         int* new_arr = new int[newLength];
@@ -80,8 +89,7 @@ int main()
     l1.push(4);
     l1.display();
     //cout<<l1.getSize()<<endl;
-    List l2;
-    l2 = l1;
+    List l2 = l1;
     //cout<<l1.getSize()<<endl;
     //l2.display();
     //cout<<l1.getSize()<<endl;
