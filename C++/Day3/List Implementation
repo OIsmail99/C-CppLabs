@@ -55,6 +55,18 @@ public:
         }
     }
 
+    void operator=(List& l){
+        delete [] this->arr; //freeing memory of the this before assigning.
+        this->top = l.top;
+        this->length = l.length;
+        this->arr = new int[this->length];
+        for(int i =0; i < this->length; i++){
+            this->arr[i] = l.arr[i];
+        }
+
+    }
+
+
 
 
 };
@@ -62,9 +74,25 @@ public:
 
 int main()
 {
-    List l;
-    l.pop();
-    l.display();
-    cout<<l.getSize();
+    List l1;
+    l1.push(2);
+    l1.push(3);
+    l1.push(4);
+    l1.display();
+    //cout<<l1.getSize()<<endl;
+    List l2;
+    l2 = l1;
+    //cout<<l1.getSize()<<endl;
+    //l2.display();
+    //cout<<l1.getSize()<<endl;
+    //cout<<l1.getSize()<<endl;
+    l2.push(7);
+    l2.push(12);
+    l2.pop();
+    l2.display();
+    cout<<l2.getSize()<<endl;
+
+    //cout<<l2.getSize();
+
     return 0;
 }
