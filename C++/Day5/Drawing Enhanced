@@ -18,9 +18,9 @@ public:
 
 class Shape{
     protected:
-        int color = WHITE;
+        int color = WHITE; //
     public:
-        Shape(int color) : color(color) {}
+        Shape(int color) : color(color) {} //constructor for Shape
 };
 
 
@@ -33,7 +33,7 @@ private:
 
 public:
     Line() : start(), end(), Shape(WHITE) {}
-    Line(int x1, int y1, int x2, int y2, int color = WHITE) : start(x1, y1), end(x2, y2), Shape(color) {}
+    Line(int x1, int y1, int x2, int y2, int color = WHITE) : start(x1, y1), end(x2, y2), Shape(color) {} //default color is white.
 
     void draw()
     {
