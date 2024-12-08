@@ -1,0 +1,32 @@
+#include <iostream>
+
+using namespace std;
+
+class Base{
+    public:
+    virtual void display(){
+    cout<<"Base display";
+    }
+
+};
+
+class Derived:public Base{
+    public:
+    void display(){
+        cout<<"Derived display";
+    }
+
+};
+
+int main()
+{
+    Derived * dptr;
+    Base b;
+    //dptr = &b; //compiler error
+    Base *bptr;
+    Derived d;
+    bptr = &d; //valid
+    bptr->display(); //since display is virtual in Base, output is "Derived display", output is "Base display" if method is not virtual.
+
+    return 0;
+}
