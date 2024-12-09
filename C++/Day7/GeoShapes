@@ -1,0 +1,134 @@
+#include <iostream>
+
+using namespace std;
+
+class GeoShape{ //abstract class because of the existence of a pure virtual function.
+
+    private:
+    float dim1;
+    float dim2;
+
+    public:
+    GeoShape(float dim1, float dim2){
+        this->dim1 = dim1;
+        this->dim2 = dim2;
+    }
+    float getDim1(){
+        return dim1;
+    }
+    float getDim2(){
+        return dim2;
+    }
+    void setDim1(float dim1){
+        this->dim1 = dim1;
+    }
+
+    void setDim2(float dim2){
+        this->dim2 = dim2;
+    }
+
+    virtual float calculateArea()=0;
+
+};
+
+class Rectangle:public GeoShape{ //public inheritance, retaining same accessibility of parent's members
+
+public:
+    Rectangle(float length, float width):GeoShape(length, width){
+    }
+
+    void setLength(float length){
+        GeoShape::setDim1(length);
+    }
+
+    void setWidth(float width){
+        GeoShape::setDim2(width);
+    }
+
+    float getLength(){
+       return GeoShape::getDim1();
+    }
+
+    float getWidth(){
+        return GeoShape::getDim2();
+    }
+
+
+    float calculateArea(){ //implementing the abstract method.
+        return getDim1() * getDim2(); //Length * Width
+    }
+};
+
+class Triangle:public GeoShape{
+public:
+    Triangle(float base, float height):GeoShape(base, height){ //passing base & height to parent constructor
+    }
+
+    void setBase(float base){
+        GeoShape::setDim1(base);
+    }
+
+    void setHeight(float height){
+        GeoShape::setDim2(height);
+    }
+
+    float getBase(){
+        return GeoShape::getDim1();
+    }
+
+    float getHeight(){
+        return GeoShape::getDim2();
+    }
+
+    float calculateArea(){
+        return (1/2 * getDim1()) * getDim2();
+    }
+};
+
+class Square:private Rectangle{ //a square is a rectangle that has one length for all parts.
+
+public:
+    Square(float length):Rectangle(length, length){ //dim1 and dim2 = length
+        }
+
+    float getLength(){
+        return getDim1();
+    }
+
+    setLength(float length){
+        setDim1(length);
+    }
+
+    float calculateArea(){
+        return Rectangle::calculateArea();
+    }
+};
+
+class Circle:private GeoShape{
+
+    public:
+    Circle(float radius):GeoShape(radius, radius){
+
+    }
+    float getRadius(){
+        GeoShape::getDim1();
+    }
+
+    void setRadius(float radius){
+        GeoShape::setDim1(radius);
+    }
+
+    float calculateArea(){
+        return 3.14 * getDim1()*getDim1();
+    }
+
+};
+
+int main()
+{
+    Square s(2);
+    cout<<s.calculateArea()<<endl;
+    Circle c(2);
+    cout<<"circle radius is "<<c.getRadius()<<endl;
+    return 0;
+}
