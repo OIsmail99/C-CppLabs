@@ -1,0 +1,141 @@
+#include <iostream>
+using namespace std;
+
+class Employee{
+    public:
+    string name;
+    int age;
+};
+template <class T>
+class Stack{
+private:
+    int top;
+    int n; //size of stack
+    T *arr;
+    static int counter;
+
+public:
+    Stack(int arr_size=10){
+        top = -1;
+        this->n = arr_size;
+        arr = new T[n];
+        counter++;
+        cout<<"creating stack object number: " <<counter<<endl;
+    }
+    ~Stack(){
+    delete []arr;
+    cout<<"deleting stack object number: " << counter<<endl;
+    counter--;
+    }
+
+     Stack(const Stack &source){ //copy constructor
+    this->top = source.top;
+    this->n = source.n;
+    this->arr = new T[n];
+    for(int i =0; i < n ; i++){
+        this->arr[i] = source.arr[i];
+    }
+    cout<<"Copy Constructor called"<<endl;
+
+    }
+
+    int push(T val){
+        if(top == n - 1){ //Stack is full.
+            return 0;
+        }
+        top++;
+        arr[top] = val;
+        return 1;
+    }
+
+    int pop(T & popped){
+        if(top == -1){
+            return 0;
+        }
+        popped = arr[top];
+        top--;
+        return 1;
+    }
+
+    int getTop(){
+        return top;
+    }
+
+    T * getArr(){
+        return arr;
+    }
+
+    void displayStack(){
+        if(top == -1){
+         cout<<"Stack is empty"<<endl;
+        }
+        else{
+        for(int i=0; i <= top; i++){
+            cout<<arr[i]<<endl;
+        }
+        }
+    }
+
+    T peek(){
+        return arr[top];
+    }
+
+
+
+
+};
+template <typename T>
+int Stack<T>::counter = 0;
+
+template <typename T>
+void viewContent_ref(Stack<T> &s){
+        int top = s.getTop();
+        T * arr = s.getArr();
+        if(top == -1){
+         cout<<"Stack is empty"<<endl;
+        }
+        else{
+        for(int i=0; i <= top; i++){
+            cout<<arr[i]<<endl;
+        }
+        }
+}
+
+template <typename T>
+void viewContent_val(Stack<T> s){
+        int top = s.getTop();
+        T * arr = s.getArr();
+        if(top == -1){
+         cout<<"Stack is empty"<<endl;
+        }
+        else{
+        for(int i=0; i <= top; i++){
+            cout<<arr[i]<<endl;
+        }
+        }
+}
+
+
+
+
+int main()
+{
+    Employee e;
+     e.age = 15;
+    e.name = "osama";
+    Stack<Employee> s;
+    s.push(e);
+    Employee returned = s.peek();
+    cout<<"Age is "<<returned.age<<endl; //age is 15
+
+    Stack<int> s1;
+
+    int data;
+    s1.push(5);
+    s1.push(3);
+    s1.push(2);
+    s1.push(10);
+    s1.displayStack();
+
+    return 0;
+}
