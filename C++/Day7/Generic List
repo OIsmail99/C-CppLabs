@@ -1,0 +1,123 @@
+#include <iostream>
+
+using namespace std;
+
+template <class T>
+class List{
+private:
+    T * arr;
+    int top;
+    int length;
+public:
+    List(){
+    top = 0;
+    length = 5;
+    arr = new T[length];
+    }
+    ~List(){
+    delete []arr;
+    }
+
+    List(const List &source){ //copy constructor
+    this->top = source.top;
+    this->length = source.length;
+    this->arr = new T[this->length];
+    for(int i = 0; i < this->length; i++){
+        this->arr[i] = source.arr[i];
+    }
+    }
+
+    void push(T val){ //making a new array every five elements.
+     if(top == this->length){
+        int newLength = length+5;
+        T* new_arr = new T[newLength];
+        for(int i=0; i < this->top ;i++){
+            new_arr[i] = this->arr[i];
+        }
+        delete []arr;
+        arr = new_arr;
+        length = newLength;
+    }
+    arr[top] = val;
+    top++;
+
+    }
+    void pop(){
+        if(top == 0){
+            cout<<"Stack is empty"<<endl;
+            return;
+        }
+        top--;
+        arr[top] = 0;
+    }
+
+    int getSize(){
+        return top;
+    }
+    void display(){
+        if(top==0){
+            cout<<"Stack is empty"<<endl;
+            return;
+        }
+        cout<<"List Elements are: "<<endl;
+        for(int i =0; i < this->top; i++){
+            cout<<arr[i]<<endl;
+        }
+    }
+
+    void operator=(List& l){
+        delete [] this->arr; //freeing memory of the this before assigning.
+        this->top = l.top;
+        this->length = l.length;
+        this->arr = new T[this->length];
+        for(int i =0; i < this->length; i++){
+            this->arr[i] = l.arr[i];
+        }
+
+    }
+    bool operator==(List &l){
+    if(this-> top != l.top){ //first check, if they're not of equal length.
+        return false;
+    }
+    for(int i =0; i < this->top;i++){
+        if(this->arr[i] != l.arr[i]){
+            return false;
+        }
+    }
+    return true;
+
+    }
+
+
+
+
+};
+
+
+int main()
+{
+    List<int> l1;
+    l1.push(2);
+    l1.push(3);
+    l1.push(4);
+    //l1.display();
+    //cout<<l1.getSize()<<endl;
+    List <int> l2 = l1;
+    //cout<<l1.getSize()<<endl;
+    //l2.display();
+    //cout<<l1.getSize()<<endl;
+    //cout<<l1.getSize()<<endl;
+    l2.push(7);
+    l2.push(12);
+    l2.pop();
+    List<int> l3;
+    l3.push(2);
+    l3.push(3);
+    l3.push(4);
+    l3.display();
+    bool result = l1==l3;
+    cout<<result;
+    //cout<<l2.getSize();
+
+    return 0;
+}
