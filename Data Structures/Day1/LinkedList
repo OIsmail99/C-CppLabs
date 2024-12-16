@@ -45,10 +45,53 @@ public:
         temp = temp->next;
     }
     }
-    void insertBefore(int before, int data){
+    int getSize(){
+        return counter;
+    }
+    void insertBefore(int before, int data){ //using two pointers.
+        Node *newNode = new Node(data);
+        Node * tempB = head; //pointer to the node to insert after (called B cuz it's before A)
+        Node * tempA = head->next; //pointer to the node to insert before.
+        while(tempA->data != before){
+            tempA = tempA->next;
+            tempB = tempB->next;
+            if(tempA == nullptr){
+                cout<<"no such node exists"<<endl;
+                return;
+            }
+        }
+        if(tempA->data == before){
+            tempB->next = newNode;
+            newNode->next = tempA;
+            newNode->prev = tempB;
+            tempA->prev = newNode;
+            tempA = nullptr;
+            tempB = nullptr;
+            counter++;
+        }
     }
 
     void insertAfter(int after, int data){
+        Node *newNode = new Node(data);
+        Node * tempB = head; //pointer to the node to insert after (called B cuz it's before A)
+        Node * tempA = head->next; //pointer to the node to insert before.
+        while(tempB->data != after){
+            tempA = tempA->next;
+            tempB = tempB->next;
+            if(tempB == nullptr){
+                cout<<"no such node exists"<<endl;
+                return;
+            }
+        }
+        if(tempB->data == after){
+            tempB->next = newNode;
+            newNode->next = tempA;
+            newNode->prev = tempB;
+            tempA->prev = newNode;
+            tempA = nullptr;
+            tempB = nullptr;
+            counter++;
+        }
     }
 
 };
@@ -60,6 +103,10 @@ int main()
     l.append(0);
     l.append(10);
     l.append(2);
+    l.insertBefore(10,5);
+    l.insertAfter(10,5);
+    //l.insertAfter(2,3); //logical error, still debugging.
     l.display();
+    cout<<l.getSize();
     return 0;
 }
