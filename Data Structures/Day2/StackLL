@@ -22,6 +22,11 @@ class StackLL{
     newNode->prev = NULL;
     }
 
+    bool isEmpty(){
+    if(tail == NULL) return true;
+    return false;
+    }
+
     void push(int data){
     Node* newNode = new Node(data);
     newNode->prev = tail;
@@ -29,7 +34,7 @@ class StackLL{
     }
 
     int pop(){
-    if(tail==NULL){ //if stack is empty
+    if(isEmpty()){ //if stack is empty
         throw "Stack is Empty";
     }
     Node* temp = tail; //creating a temp so we don't end up with an unreferenced Node
@@ -40,7 +45,7 @@ class StackLL{
     }
 
     int peek(){
-    if(tail == NULL) throw "Stack is empty";
+    if(isEmpty()) throw "Stack is empty";
     return tail->data;
     }
 
