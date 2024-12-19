@@ -1,0 +1,81 @@
+#include <iostream>
+
+using namespace std;
+
+class Node{
+public:
+    int data;
+    Node * prev;
+
+    Node(int data){
+    this->data = data;
+    this->prev = NULL;
+    }
+};
+
+class QueueLL{
+public:
+    Node * front;
+    Node * rear;
+
+    QueueLL(int data){
+    Node * newNode = new Node(data);
+    front = newNode;
+    rear = newNode;
+    }
+
+    bool isEmpty(){
+    if(rear == NULL && front == NULL) return true;
+    return false;
+    }
+
+    void enqueue(int data){
+        Node *newNode = new Node(data);
+        rear->prev = newNode;
+        rear = newNode;
+    }
+
+    int dequeue(){
+        if(isEmpty()) throw "Queue is Empty";
+
+        Node * temp = front;
+        int data = temp->data;
+
+        front = front->prev;
+        if(front == NULL) rear = NULL;
+        delete temp;
+        return data;
+    }
+
+    void display(){
+    if(isEmpty()) throw "Queue is Empty";
+
+    Node* temp = front;
+    while(temp != NULL){
+        cout<<temp->data<<endl;
+        temp = temp->prev;
+    }
+    }
+
+};
+
+int main()
+{
+    QueueLL l(5);
+    l.enqueue(3);
+    l.enqueue(5);
+    l.enqueue(6);
+    int returned = l.dequeue();
+    cout<<"returned value is: "<<returned<<endl; //5
+    l.dequeue();
+    l.dequeue();
+    l.dequeue();
+
+     try{
+        l.display();
+    }
+    catch( const char*msg){
+        cout<<msg<<endl;
+    }
+    return 0;
+}
