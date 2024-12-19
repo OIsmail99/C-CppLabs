@@ -1,0 +1,74 @@
+#include <iostream>
+
+using namespace std;
+
+class Node{
+public:
+    int data;
+    Node* prev;
+
+    Node(int data){ //constructor of the node
+    this->data = data;
+    }
+};
+
+class StackLL{
+    public:
+    Node* tail;
+
+    StackLL(int data){ //constructor of the Stack
+    Node* newNode = new Node(data);
+    tail = newNode;
+    newNode->prev = NULL;
+    }
+
+    void push(int data){
+    Node* newNode = new Node(data);
+    newNode->prev = tail;
+    tail = newNode;
+    }
+
+    int pop(){
+    if(tail==NULL){ //if stack is empty
+        throw "Stack is Empty";
+    }
+    Node* temp = tail; //creating a temp so we don't end up with an unreferenced Node
+    int data = tail->data;
+    tail = tail->prev;
+    delete temp;
+    return data;
+    }
+
+    int peek(){
+    if(tail == NULL) throw "Stack is empty";
+    return tail->data;
+    }
+
+    void display(){
+    Node* temp = tail;
+    while(temp != NULL){
+        cout<<temp->data<<endl;
+        temp = temp->prev;
+    }
+    }
+
+};
+int main()
+{
+    StackLL l(5);
+    l.push(10);
+    l.push(-23);
+    l.display();
+    int returned = l.pop();
+    cout<<"popped item is: "<<returned<<endl;
+    try{
+        l.pop();
+        l.pop();
+        l.pop(); //will throw an error which will be caught by the catch.
+    }
+    catch(const char * msg){
+     cout<<msg<<endl;
+    }
+
+    return 0;
+}
