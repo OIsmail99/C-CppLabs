@@ -1,0 +1,23 @@
+void binarySearch(int arr[], int size, int element){
+
+    int low = arr[0];
+    int high = arr[size - 1];
+    int iterations = 0;
+    int mid;
+
+    while(low <= high){
+        mid = (low + high) / 2;
+        if(element == arr[mid]) {
+                iterations++;
+                cout<<"element: " << element << " found by performing " << iterations << " iterations"<<endl;
+                return;
+    }
+        if(element > arr[mid]){
+            low = mid + 1;
+        }
+        if(element < arr[mid]){
+            high = mid - 1;
+        }
+        iterations++;
+}
+}
