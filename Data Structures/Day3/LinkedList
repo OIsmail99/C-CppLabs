@@ -1,0 +1,207 @@
+#include <iostream>
+
+using namespace std;
+class Node{
+    public:
+    int data;
+    Node * next;
+    Node * prev;
+
+    Node(int data){
+    this->data = data;
+    this->next = nullptr;
+    this->prev = nullptr;
+    }
+    void display(){
+    cout<<this->data<<endl;
+    }
+
+};
+
+class LinkedList{
+    Node * head;
+    Node * tail;
+    int length; //how many nodes in the linkedlist
+public:
+    LinkedList(){
+        head = nullptr;
+        tail = nullptr;
+        length = 0;
+    }
+    void append(int data){
+    Node *newNode = new Node(data);
+    if(head == nullptr){
+        head = newNode;
+        tail = newNode;
+    }
+    else{
+        newNode->prev = tail;
+        tail->next = newNode;
+        tail = newNode;
+    }
+    this->length++;
+    }
+    void display(){
+    Node * temp = head;
+    while(temp != nullptr){
+        cout<<temp->data<<endl;
+        temp = temp->next;
+    }
+    }
+    int getSize(){
+        return length;
+    }
+    void prepend(int data){
+    Node * newNode = new Node(data);
+    if(length==0){
+        head=newNode;
+        tail=newNode;
+        length++;
+    }
+    else{
+        newNode->next = head;
+        head = newNode;
+        length++;
+    }
+
+    }
+
+
+    void insertBefore(int before, int data){ //using two pointers.
+        Node *newNode = new Node(data);
+        Node * tempB = head; //pointer to the node to insert after (called B cuz it's before A)
+        Node * tempA = head->next; //pointer to the node to insert before.
+
+        if(head->data == before){
+            prepend(data);
+            return;
+        }
+
+        while(tempA->data != before){
+            tempA = tempA->next;
+            tempB = tempB->next;
+            if(tempA == nullptr){
+                cout<<"no such node exists"<<endl;
+                return;
+            }
+        }
+        if(tempA->data == before){
+            tempB->next = newNode;
+            newNode->next = tempA;
+            newNode->prev = tempB;
+            tempA->prev = newNode;
+            tempA = nullptr;
+            tempB = nullptr;
+            length++;
+        }
+    }
+
+    void insertAfter(int after, int data){
+        Node *newNode = new Node(data);
+        Node * tempB = head; //pointer to the node to insert after
+        Node * tempA = head->next; //pointer to the node to insert before.
+
+        if(tail->data == after){
+            append(data);
+            return;
+        }
+
+        while(tempB->data != after){
+            tempA = tempA->next;
+            tempB = tempB->next;
+            if(tempB == nullptr){
+                cout<<"no such node exists"<<endl;
+                return;
+            }
+            if(tempB != nullptr && tempA == nullptr){
+
+            }
+        }
+        if(tempB->data == after){
+            tempB->next = newNode;
+            newNode->next = tempA;
+            newNode->prev = tempB;
+            tempA->prev = newNode;
+            tempA = nullptr;
+            tempB = nullptr;
+            length++;
+        }
+    }
+
+    void removeFirst(){
+        if(head == NULL) throw "LL is empty";
+        Node * temp = head;
+        head = head->next;
+        temp->next = NULL;
+        head->prev = NULL;
+        length--;
+        delete temp;
+    }
+
+    void removeLast(){
+        if(tail == NULL) throw "LL is empty";
+        Node * temp = tail;
+        tail = tail->prev;
+        tail->next = NULL;
+        temp->prev = NULL;
+        length--;
+        delete temp;
+    }
+
+
+    Node * remove(int data){ //returns a pointer to the node that has been removed.
+    if(length == 0) throw "LL is empty";
+    Node * temp = head;
+    while(temp->data != data){
+        temp=temp->next;
+    }
+    if(temp == NULL) throw "no data to remove";
+    temp->prev->next = temp->next;
+    temp->next->prev = temp->prev;
+
+
+    temp->prev = NULL;
+    temp->next = NULL;
+    length--;
+    return temp;
+
+    }
+
+    void bubbleSort(){
+    for(int i = 0; i < length - 1; i++){
+        bool swapped = false;
+        Node * current = head;
+        for(int j=0; j < length - 1 - i; j++){
+            if(current->data > current->next->data){
+                int temp = current->data;
+                current->data = current->next->data;
+                current->next->data = temp;
+                swapped = true;
+            }
+        current = current->next;
+        }
+        if(swapped == false) break;
+    }
+    }
+
+};
+
+
+int main()
+{
+    LinkedList l;
+    l.append(0);
+    l.append(10);
+    l.append(2);
+    l.prepend(30); //30 0 10 2
+    l.insertBefore(30,5); // 5 30 0 10 2
+    l.insertAfter(2,3); //5 30 0 10 2 3
+    Node* removed = l.remove(2);
+    //cout<<"removed node is: "<<removed->data<<endl;
+    l.display(); //5 30 0 10 3
+    l.bubbleSort();
+    cout<<"============================"<<endl;
+    l.display();
+    //cout<<l.getSize();
+    return 0;
+}
